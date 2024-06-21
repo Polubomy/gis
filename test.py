@@ -143,8 +143,24 @@ if token:
 else:
     print("Токен не получен, тест не выполнен")
 
-# Тест 8: Создание места с отрицательными значениями широты и долготы
-print("\nТест 8: Создание места с отрицательными значениями широты и долготы")
+# Тест 8: Создание места с количеством символов > максимально допустимого
+print("\nТест 8: Создание места с количеством символов > максимально допустимого")
+token = get_token()
+if token:
+    data = {
+        'title': 'A' * 1000,
+        'lat': 55.028254,
+        'lon': 82.918501
+    }
+    response = send_post_request('v1/favorites', data, token)
+    print(f"Статус код теста 7: {response.status_code}")
+    response_json = response.json()
+    pprint.pprint(response_json)
+else:
+    print("Токен не получен, тест не выполнен")
+
+# Тест 9: Создание места с отрицательными значениями широты и долготы
+print("\nТест 9: Создание места с отрицательными значениями широты и долготы")
 token = get_token()
 if token:
     data = {
@@ -153,23 +169,23 @@ if token:
         'lon': -82.918501
     }
     response = send_post_request('v1/favorites', data, token)
-    print(f"Статус код теста 8: {response.status_code}")
+    print(f"Статус код теста 9: {response.status_code}")
     response_json = response.json()
     pprint.pprint(response_json)
 else:
     print("Токен не получен, тест не выполнен")
 
-# Тест 9: Создание места без необязательного параметра color
-print("\nТест 9: Создание места без необязательного параметра color")
+# Тест 10: Создание места без необязательного параметра color
+print("\nТест 10: Создание места без необязательного параметра color")
 token = get_token()
 if token:
     data = {
-        'title': 'Тест 9',
+        'title': 'Тест 10',
         'lat': 55.028254,
         'lon': 82.918501
     }
     response = send_post_request('v1/favorites', data, token)
-    print(f"Статус код теста 9: {response.status_code}")
+    print(f"Статус код теста 10: {response.status_code}")
     response_json = response.json()
     pprint.pprint(response_json)
 else:
