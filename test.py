@@ -4,12 +4,14 @@ import pprint
 # Базовый URL API
 URL = "https://regions-test.2gis.com/"
 
-# Функция для получения токена
 def get_token():
-    response = requests.post(URL + '/v1/auth/tokens')
+    response = requests.post(URL + 'v1/auth/tokens') # POST запрос с пустым телом
+    print(f"Статус код получения куки: {response.status_code}")
+    print("Заголовки:")
+    pprint.pprint(dict(response.headers))
     if response.status_code == 200:
         token = response.cookies.get('token')
-        print(f"Token - {token}")
+        print(f"\nToken - {token}")
         return token
     else:
         print(f"Ошибка при получении токена: {response.status_code}")
@@ -36,7 +38,7 @@ if token:
     }
     response = send_post_request('/v1/favorites', data, token) # https://regions-test.2gis.com/v1/favorites?title=Тест+1&lat=55.028254&lon=82.918501&color=BLUE"
     if response.status_code == 200:
-        print(f"Статус код: {response.status_code}")
+        print(f"Статус код теста 1: {response.status_code}")
         response_json = response.json()
         pprint.pprint(response_json)
     else:
@@ -54,7 +56,7 @@ if token:
         'lon': 82.918501
     }
     response = send_post_request('/v1/favorites', data, token)
-    print(f"Статус код: {response.status_code}")
+    print(f"Статус код теста 2: {response.status_code}")
     response_json = response.json()
     pprint.pprint(response_json)
 
@@ -71,7 +73,7 @@ if token:
         'lon': 200
     }
     response = send_post_request('/v1/favorites', data, token)
-    print(f"Статус код: {response.status_code}")
+    print(f"Статус код теста 3: {response.status_code}")
     response_json = response.json()
     pprint.pprint(response_json)
 else:
@@ -88,7 +90,7 @@ if token:
         'color': 'Purple'
     }
     response = send_post_request('/v1/favorites', data, token)
-    print(f"Статус код: {response.status_code}")
+    print(f"Статус код теста 4: {response.status_code}")
     response_json = response.json()
     pprint.pprint(response_json)
 else:
@@ -103,7 +105,7 @@ if token:
         'lon': 82.918501
     }
     response = send_post_request('/v1/favorites', data, token)
-    print(f"Статус код: {response.status_code}")
+    print(f"Статус код теста 5: {response.status_code}")
     response_json = response.json()
     pprint.pprint(response_json)
 else:
@@ -119,7 +121,7 @@ if token:
         'lon': 82.918501
     }
     response = send_post_request('v1/favorites', data, token)
-    print(f"Статус код: {response.status_code}")
+    print(f"Статус код теста 6: {response.status_code}")
     response_json = response.json()
     pprint.pprint(response_json)
 else:
@@ -135,7 +137,7 @@ if token:
         'lon': 82.918501
     }
     response = send_post_request('v1/favorites', data, token)
-    print(f"Статус код: {response.status_code}")
+    print(f"Статус код теста 7: {response.status_code}")
     response_json = response.json()
     pprint.pprint(response_json)
 else:
@@ -151,7 +153,7 @@ if token:
         'lon': -82.918501
     }
     response = send_post_request('v1/favorites', data, token)
-    print(f"Статус код: {response.status_code}")
+    print(f"Статус код теста 8: {response.status_code}")
     response_json = response.json()
     pprint.pprint(response_json)
 else:
@@ -167,7 +169,7 @@ if token:
         'lon': 82.918501
     }
     response = send_post_request('v1/favorites', data, token)
-    print(f"Статус код: {response.status_code}")
+    print(f"Статус код теста 9: {response.status_code}")
     response_json = response.json()
     pprint.pprint(response_json)
 else:
