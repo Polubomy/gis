@@ -10,15 +10,25 @@ def get_token():
     token = token_response.cookies.get('token')
     return token
 
-
+errors = []
 class APITests(unittest.TestCase):
+
+    @classmethod
+    def tearDownClass(cls):
+        global errors
+        if errors:
+            print("\n===== Ошибки в тестах =====")
+            for error in errors:
+                print(error)
 
     def test_get_auth_token(self):
         response = requests.post(f"{BASE_URL}/v1/auth/tokens")
 
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}") # Проваливаем тест с описанием ошибки
+
         else:
             self.addCleanup(lambda: print(f"Тест test_get_auth_token успешно прошел!"))
 
@@ -35,6 +45,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place успешно прошел!"))
@@ -52,6 +63,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_with_color успешно прошел!"))
@@ -69,6 +81,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_invalid_title успешно прошел!"))
@@ -86,6 +99,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_invalid_color успешно прошел!"))
@@ -101,6 +115,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_missing_title успешно прошел!"))
@@ -116,6 +131,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_missing_lat успешно прошел!"))
@@ -132,6 +148,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_invalid_lat успешно прошел!"))
@@ -147,6 +164,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_missing_lon успешно прошел!"))
@@ -163,6 +181,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_invalid_lon успешно прошел!"))
@@ -180,6 +199,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_invalid_lat_format успешно прошел!"))
@@ -197,6 +217,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_invalid_lon_format успешно прошел!"))
@@ -214,6 +235,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Токен запроса - {token}"))
@@ -222,6 +244,7 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Токен запроса - {token}"))
@@ -240,8 +263,11 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
+            errors.append(error_message)
             self.fail(f"Тест не прошел: {error_message}")
         else:
             self.addCleanup(lambda: print(f"Тест test_create_favorite_overtime успешно прошел!"))
+
 if __name__ == '__main__':
     unittest.main()
+
