@@ -1,3 +1,5 @@
+import pprint
+
 import requests
 
 test_results = []
@@ -171,6 +173,22 @@ if token:
     }
     response = send_post_request('/v1/favorites', data, token)
     print_response_details(response, token, data['title'])
+else:
+    print("Токен не получен, тест не выполнен")
+
+# Тест 10: формат данных в виде текста, а не значения
+print("\nТест 10: Создание места без необязательного параметра color")
+token = get_token()
+if token:
+    data = {
+        'title': 'Тест 10',
+        'lat': 55.028254,
+        'lon': "82.918501"
+    }
+    response = send_post_request('/v1/favorites', data, token)
+    print_response_details(response, token, data['title'])
+    response_json = response.json()
+    pprint.pprint(response_json)
 else:
     print("Токен не получен, тест не выполнен")
 
