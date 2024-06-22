@@ -11,8 +11,13 @@ def get_token():
 
 class APITests(unittest.TestCase):
 
+    def test_request_cookie(self):
+        # Проверяет правильность запроса сессионного токена
+        token_response = requests.post(f"{BASE_URL}/v1/auth/tokens")
+        self.assertEqual(token_response.status_code, 200, "Ошибка: Неверный код ответа сервера")
+
     def test_create_favorite_place_valid(self):
-        # Проверяет успешное создание избранного места с валидными данными.
+        # Проверяет успешное создание избранного места с валидными данными
         token = get_token()
         data = {
             "title": "Test Place",
