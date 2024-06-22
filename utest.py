@@ -1,5 +1,6 @@
 import requests
 import unittest
+import time
 
 BASE_URL = "https://regions-test.2gis.com/"
 
@@ -164,7 +165,83 @@ class APITests(unittest.TestCase):
             error_message = response.json().get('error', {}).get('message')
             self.fail(f"Тест не прошел: {error_message}")
         else:
-            self.addCleanup(lambda: print(f"Тест test_create_favorite_place_invalid_lat успешно прошел!"))
+            self.addCleanup(lambda: print(f"Тест test_create_favorite_place_invalid_lon успешно прошел!"))
 
+    def test_create_favorite_place_invalid_lat_format(self):
+        token = get_token()
+
+        data = {
+            "title": "Test Place",
+            "lat": "55.7558",
+            "lon": 37.6173,
+            "color": "RED"
+        }
+
+        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        if response.status_code != 200:
+            error_message = response.json().get('error', {}).get('message')
+            self.fail(f"Тест не прошел: {error_message}")
+        else:
+            self.addCleanup(lambda: print(f"Тест test_create_favorite_place_invalid_lat_format успешно прошел!"))
+
+    def test_create_favorite_place_invalid_lon_format(self):
+        token = get_token()
+
+        data = {
+            "title": "Test Place",
+            "lat": 55.75258,
+            "lon": "37.61273",
+            "color": "RED"
+        }
+
+        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        if response.status_code != 200:
+            error_message = response.json().get('error', {}).get('message')
+            self.fail(f"Тест не прошел: {error_message}")
+        else:
+            self.addCleanup(lambda: print(f"Тест test_create_favorite_place_invalid_lon_format успешно прошел!"))
+
+    def test_create_favorite_place_duplicate(self):
+        token = get_token()
+
+        data = {
+            "title": "duplicate",
+            "lat": 55.755811,
+            "lon": 37.617311,
+            "color": "RED"
+        }
+
+        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        if response.status_code != 200:
+            error_message = response.json().get('error', {}).get('message')
+            self.fail(f"Тест не прошел: {error_message}")
+        else:
+            self.addCleanup(lambda: print(f"Токен запроса - {token}"))
+            self.addCleanup(lambda: print(f"Тест test_create_favorite_place_duplicate успешно прошел!"))
+
+        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        if response.status_code != 200:
+            error_message = response.json().get('error', {}).get('message')
+            self.fail(f"Тест не прошел: {error_message}")
+        else:
+            self.addCleanup(lambda: print(f"Токен запроса - {token}"))
+            self.addCleanup(lambda: print(f"Тест test_create_favorite_place_duplicate1 успешно прошел!"))
+
+    def test_create_favorite_overtime(self):
+        token = get_token()
+        time.sleep(3)
+        data = {
+            "title": "duplicate",
+            "lat": 55.755811,
+            "lon": 37.617311,
+            "color": "RED"
+        }
+
+        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        if response.status_code != 200:
+            error_message = response.json().get('error', {}).get('message')
+            self.fail(f"Тест не прошел: {error_message}")
+        else:
+            self.addCleanup(lambda: print(f"Тест test_create_favorite_overtime успешно прошел!"))
 if __name__ == '__main__':
     unittest.main()
