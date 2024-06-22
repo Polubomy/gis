@@ -192,6 +192,25 @@ if token:
 else:
     print("Токен не получен, тест не выполнен")
 
+print("\nТест 11: Дубликат")
+token = get_token()
+if token:
+    data = {
+        "title": "Duplicate",
+        "lat": 55.7558,
+        "lon": 37.6173,
+        "color": "GREEN"
+    }
+
+    response1 = send_post_request('/v1/favorites', data, token)
+    response_json1 = response1.json()
+    pprint.pprint(response_json1)
+
+    response2 = send_post_request('/v1/favorites', data, token)
+    response_json2 = response2.json()
+    pprint.pprint(response_json2)
+
+
 for result in test_results:
     test_name = result['test_name']
     error_message = result['error_message']
