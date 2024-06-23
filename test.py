@@ -205,10 +205,12 @@ if token:
     response1 = send_post_request('/v1/favorites', data, token)
     response_json1 = response1.json()
     pprint.pprint(response_json1)
+    print_response_details(response1, token, data['title'])
 
     response2 = send_post_request('/v1/favorites', data, token)
     response_json2 = response2.json()
     pprint.pprint(response_json2)
+    print_response_details(response2, token, data['title'])
 
 
 for result in test_results:
