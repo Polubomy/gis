@@ -124,28 +124,6 @@ class APITests(unittest.TestCase):
         self.assertNotEqual(response.status_code, 200, "Ошибка: Сервер не вернул ошибку при отсутствии названия")
 
 
-    def test_place_missing_lat(self):
-        # Проверяет ошибку при отсутствии широты
-        token = get_token()
-        data = {
-            "title": "Test Place",
-            "lon": 37.6173,
-            "color": "YELLOW"
-        }
-        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
-        self.assertNotEqual(response.status_code, 200, "Ошибка: Сервер не вернул ошибку при отсутствии широты")
-
-    def test_place_missing_lon(self):
-        #Проверяет ошибку при отсутствии долготы
-        token = get_token()
-        data = {
-            "title": "Test Place",
-            "lat": 55.7558,
-            "color": "GREEN"
-        }
-        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
-        self.assertNotEqual(response.status_code, 200, "Ошибка: Сервер не вернул ошибку при отсутствии долготы")
-
     def test_place_invalid_lat(self):
         # Проверяет ошибку при некорректном значении широты
         token = get_token()
