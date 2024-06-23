@@ -2,11 +2,11 @@ import requests
 import unittest
 import time
 
-BASE_URL = "https://regions-test.2gis.com/"
+URL = "https://regions-test.2gis.com/"
 
 
 def get_token():
-    token_response = requests.post(f"{BASE_URL}/v1/auth/tokens")
+    token_response = requests.post(f"{URL}/v1/auth/tokens")
     token = token_response.cookies.get('token')
     return token
 
@@ -22,7 +22,7 @@ class APITests(unittest.TestCase):
                 print(error)
 
     def test_get_auth_token(self):
-        response = requests.post(f"{BASE_URL}/v1/auth/tokens")
+        response = requests.post(f"{URL}/v1/auth/tokens")
 
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
@@ -42,7 +42,7 @@ class APITests(unittest.TestCase):
             "lon": 37.6173
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -60,7 +60,7 @@ class APITests(unittest.TestCase):
             "color": "RED"
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -78,7 +78,7 @@ class APITests(unittest.TestCase):
             "lon": 37.6173
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -96,7 +96,7 @@ class APITests(unittest.TestCase):
             "color": "INVALID_COLOR"
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -112,7 +112,7 @@ class APITests(unittest.TestCase):
             "lon": 37.6173,
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -128,7 +128,7 @@ class APITests(unittest.TestCase):
             "lon": 37.6173,
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -145,7 +145,7 @@ class APITests(unittest.TestCase):
             "lon": 37.6173
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -161,7 +161,7 @@ class APITests(unittest.TestCase):
             "lat": 55.7558,
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -178,7 +178,7 @@ class APITests(unittest.TestCase):
             "lon": 190
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -196,7 +196,7 @@ class APITests(unittest.TestCase):
             "color": "RED"
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -214,7 +214,7 @@ class APITests(unittest.TestCase):
             "color": "RED"
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -232,7 +232,7 @@ class APITests(unittest.TestCase):
             "color": "RED"
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -241,7 +241,7 @@ class APITests(unittest.TestCase):
             self.addCleanup(lambda: print(f"Токен запроса - {token}"))
             self.addCleanup(lambda: print(f"Тест test_create_favorite_place_duplicate успешно прошел!"))
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
@@ -260,7 +260,7 @@ class APITests(unittest.TestCase):
             "color": "RED"
         }
 
-        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response = requests.post(f"{URL}/v1/favorites", data=data, cookies={'token': token})
         if response.status_code != 200:
             error_message = response.json().get('error', {}).get('message')
             errors.append(error_message)
