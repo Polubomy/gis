@@ -16,7 +16,7 @@ class APITests(unittest.TestCase):
         token_response = requests.post(f"{BASE_URL}/v1/auth/tokens")
         self.assertEqual(token_response.status_code, 200, "Ошибка: Неверный код ответа сервера")
 
-    def test__place_valid(self):
+    def test_place_valid(self):
         # Проверяет успешное создание избранного места с валидными данными
         token = get_token()
         data = {
@@ -33,7 +33,7 @@ class APITests(unittest.TestCase):
         self.assertEqual(response_data['lon'], 37.6173, "Ошибка: Неверная долгота в ответе")
         self.assertEqual(response_data['color'], "RED", "Ошибка: Неверный цвет в ответе")
 
-    def test__place_invalid_lat_format(self):
+    def test_place_invalid_lat_format(self):
         # роверяет ошибку при некорректном формате широты
         token = get_token()
         data = {
