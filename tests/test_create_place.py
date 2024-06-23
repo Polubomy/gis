@@ -99,5 +99,33 @@ class test_create_place(unittest.TestCase):
         self.assertEqual(response_data['lon'], 82.918501)
         self.assertEqual(response_data['color'], None)
 
+    def test_missing_lat(self):
+        data_7 = {
+            'title': 'Test_7',
+            'lon': 82.918501,
+            'color': 'RED'
+        }
+
+        response_data = create_place.create_place(data_7)
+        pprint.pprint(response_data)
+
+        self.assertEqual(response_data['title'], 'Test_7')
+        self.assertEqual(response_data['lon'], 82.918501)
+        self.assertEqual(response_data['color'], 'RED')
+
+    def test_missing_lon(self):
+        data_8 = {
+            'title': 'Test_8',
+            'lat': 55.028254,
+            'color': 'RED'
+        }
+
+        response_data = create_place.create_place(data_8)
+        pprint.pprint(response_data)
+
+        self.assertEqual(response_data['title'], 'Test_8')
+        self.assertEqual(response_data['lat'], 55.028254)
+        self.assertEqual(response_data['color'], 'RED')
+
 if __name__ == '__main__':
     unittest.main()
