@@ -45,6 +45,9 @@ class APITests(unittest.TestCase):
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         response_data = response.json()
         self.assertEqual(response_data['lat'], 55.7558, "Ошибка: Вернул переделанный текст в число, исходным был текст")
+        self.assertEqual(response_data['title'], "Test Place", "Ошибка: Неверное название места в ответе")
+        self.assertEqual(response_data['lon'], 37.6173, "Ошибка: Неверная долгота в ответе")
+        self.assertEqual(response_data['color'], "RED", "Ошибка: Неверный цвет в ответе")
 
 
     def test_create_favorite_place_duplicate(self):
@@ -58,25 +61,55 @@ class APITests(unittest.TestCase):
         }
         # Создаем дубликат
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response_data = response.json()
         self.assertEqual(response.status_code, 200, "Ошибка: Ошиюка в запросе")
+        self.assertEqual(response_data['title'], "Duplicate Place", "Ошибка: Неверное название места в ответе")
+        self.assertEqual(response_data['lat'], 55.7558, "Ошибка: Неверная широта в ответе")
+        self.assertEqual(response_data['lon'], 37.6173, "Ошибка: Неверная долгота в ответе")
+        self.assertEqual(response_data['color'], "GREEN", "Ошибка: Неверный цвет в ответе")
 
         response1 = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
         self.assertNotEqual(response1.status_code, 200, "Ошибка: Создается дубликт с теми же данными(включая токен), но id метке присваевается новый")
+        response_data1 = response1.json()
+        self.assertEqual(response_data1['title'], "Duplicate Place", "Ошибка: Неверное название места в ответе")
+        self.assertEqual(response_data1['lat'], 55.7558, "Ошибка: Неверная широта в ответе")
+        self.assertEqual(response_data1['lon'], 37.6173, "Ошибка: Неверная долгота в ответе")
+        self.assertEqual(response_data1['color'], "GREEN", "Ошибка: Неверный цвет в ответе")
 
 
-
-
-    def test_create_favorite_place_invalid_color(self):
+    def test_create_favorite_place_invalid_color_red(self):
         #Проверяет ошибку при некорректном цвете
         token = get_token()
         data = {
-            "title": "Test Place",
+            "title": "Place",
             "lat": 55.7558,
             "lon": 37.6173,
-            "color": "INVALID_COLOR"
+            "color": "red"
         }
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
-        self.assertNotEqual(response.status_code, 200, "Ошибка: Сервер не вернул ошибку при некорректном цвете")
+        response_data = response.json()
+        self.assertEqual(response.status_code, 200, "Ошибка: Преднамеренная шибка в запросе с неверным цветом")
+        self.assertEqual(response_data['title'], "Place", "Ошибка: Неверное название места в ответе")
+        self.assertEqual(response_data['lat'], 55.7558, "Ошибка: Неверная широта в ответе")
+        self.assertEqual(response_data['lon'], 37.6173, "Ошибка: Неверная долгота в ответе")
+        self.assertEqual(response_data['color'], "RED", "Ошибка: Неверный цвет в ответе")
+
+    def test_create_favorite_place_invalid_color_Invalid(self):
+        #Проверяет ошибку при некорректном цвете
+        token = get_token()
+        data = {
+            "title": "Place",
+            "lat": 55.7558,
+            "lon": 37.6173,
+            "color": "invalid"
+        }
+        response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response_data = response.json()
+        self.assertEqual(response.status_code, 200, "Ошибка: Преднамеренная шибка в запросе с неверным цветом")
+        self.assertEqual(response_data['title'], "Place", "Ошибка: Неверное название места в ответе")
+        self.assertEqual(response_data['lat'], 55.7558, "Ошибка: Неверная широта в ответе")
+        self.assertEqual(response_data['lon'], 37.6173, "Ошибка: Неверная долгота в ответе")
+        self.assertEqual(response_data['color'], "RED", "Ошибка: Неверный цвет в ответе")
 
     def test_create_favorite_place_missing_title(self):
         # Проверяет ошибку при отсутствии названия
@@ -87,7 +120,9 @@ class APITests(unittest.TestCase):
             "color": "BLUE"
         }
         response = requests.post(f"{BASE_URL}/v1/favorites", data=data, cookies={'token': token})
+        response_data = response.json()
         self.assertNotEqual(response.status_code, 200, "Ошибка: Сервер не вернул ошибку при отсутствии названия")
+
 
     def test_create_favorite_place_missing_lat(self):
         # Проверяет ошибку при отсутствии широты
